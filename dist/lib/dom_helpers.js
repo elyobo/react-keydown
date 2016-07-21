@@ -10,13 +10,22 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var focusableSelector = 'a[href], button, input, object, select, textarea, [tabindex]';
+
+function nodeListToArray(nl) {
+  var a = [];
+  var l = nl.length;
+
+  while (l--) {
+    a[l] = nl[l];
+  }
+
+  return a;
+}
 
 /**
  * bindFocusables: Find any focusable child elements of the component instance and
@@ -44,12 +53,29 @@ function bindFocusables(instance, activateOnFocus) {
             if (onFocusPrev) onFocusPrev.call(element, event);
           };
         };
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-        var _arr = [].concat(_toConsumableArray(focusables));
+        try {
+          for (var _iterator = nodeListToArray(focusables)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var element = _step.value;
 
-        for (var _i = 0; _i < _arr.length; _i++) {
-          var element = _arr[_i];
-          element.onfocus = onFocus(element);
+            element.onfocus = onFocus(element);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator['return']) {
+              _iterator['return']();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
         }
       }
     }

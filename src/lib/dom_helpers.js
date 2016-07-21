@@ -6,6 +6,17 @@ import ReactDOM from 'react-dom';
 
 const focusableSelector = 'a[href], button, input, object, select, textarea, [tabindex]';
 
+function nodeListToArray(nl) {
+  const a = [];
+  let l = nl.length;
+
+  while (l--) {
+    a[l] = nl[l];
+  }
+
+  return a;
+}
+
 /**
  * bindFocusables: Find any focusable child elements of the component instance and
  * add an onFocus handler to focus our keydown handlers on the parent component
@@ -32,7 +43,7 @@ function bindFocusables( instance, activateOnFocus ) {
             if ( onFocusPrev ) onFocusPrev.call( element, event );
           };
         };
-        for ( let element of [ ...focusables ] ) {
+        for ( let element of nodeListToArray(focusables) ) {
           element.onfocus = onFocus( element );
         }
       }
